@@ -1,15 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import {
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
+import MasonryList from "react-native-masonry-list";
 
-import Constants from "expo-constants";
 import { Feather } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
@@ -19,16 +12,14 @@ const FOLLOW_COLOR = "rgb(71,113,246)";
 const SEND_MESSAGE_COLOR = "rgb(120,213,250)";
 
 export default function App() {
-  const imgData = [
-    { id: 1, imgSource: require("./assets/1.jpg") },
-    { id: 2, imgSource: require("./assets/2.jpg") },
-    { id: 3, imgSource: require("./assets/3.jpg") },
-    { id: 4, imgSource: require("./assets/4.jpg") },
-    { id: 5, imgSource: require("./assets/5.jpg") },
-    { id: 6, imgSource: require("./assets/6.jpg") },
+  const imgDataMasory = [
+    { source: require("./assets/5.jpg"), width: 720, height: 884 },
+    { source: require("./assets/2.jpg"), width: 1360, height: 2040 },
+    { source: require("./assets/3.jpg"), width: 850, height: 1275 },
+    { source: require("./assets/4.jpg"), width: 650, height: 975 },
+    { source: require("./assets/1.jpg"), width: 736, height: 1104 },
+    { source: require("./assets/6.jpg"), width: 736, height: 1104 },
   ];
-
-  const centerImgData = Math.floor(imgData.length / 2);
 
   return (
     <View style={styles.container}>
@@ -92,27 +83,12 @@ export default function App() {
       </View>
 
       <View style={styles.imageArea}>
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <View style={styles.listImage}>
-            {imgData.slice(0, centerImgData).map((item) => {
-              return (
-                <TouchableOpacity key={item.id}>
-                  <Image source={item.imgSource} style={styles.image} />
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-
-          <View style={styles.listImage}>
-            {imgData.slice(centerImgData).map((item) => {
-              return (
-                <TouchableOpacity key={item.id}>
-                  <Image source={item.imgSource} style={styles.image} />
-                </TouchableOpacity>
-              );
-            })}
-          </View>
-        </ScrollView>
+        <MasonryList
+          images={imgDataMasory}
+          columns={2}
+          imageContainerStyle={styles.image}
+          spacing={3}
+        />
       </View>
 
       <View style={styles.navBarWrapper}>
@@ -136,7 +112,7 @@ const styles = StyleSheet.create({
   container: {
     marginHorizontal: 23,
     marginTop: 35,
-    flex: 1, // 0.05 0.15 0.18 0.65 0.07
+    flex: 1, // 0.05 0.15 0.18 0.55 0.07
   },
 
   header: {
@@ -220,7 +196,7 @@ const styles = StyleSheet.create({
   },
 
   imageArea: {
-    flex: 0.65,
+    flex: 0.55,
   },
 
   scrollView: {
@@ -229,20 +205,13 @@ const styles = StyleSheet.create({
   },
 
   image: {
-    width: null,
-    height: 150,
     borderRadius: 15,
-    marginBottom: 15,
   },
 
   navBarWrapper: {
     flex: 0.07,
     alignItems: "center",
     justifyContent: "center",
-  },
-
-  listImage: {
-    flex: 0.4775,
   },
 
   navBar: {
